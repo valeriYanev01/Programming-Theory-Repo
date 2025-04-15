@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Ammo : MonoBehaviour
+public class Ammo : MainManager
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,7 +26,9 @@ public class Ammo : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
+            score += 5;
             Destroy(other.gameObject);
+            Destroy(gameObject);
         }
     }
 }

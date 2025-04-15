@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MainManager
 {
     private Rigidbody playerRb;
     public GameObject ammoPrefab;
@@ -28,6 +28,15 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            lives--;
+            Destroy(other.gameObject);
+        }
+    }
+
     private void MovePlayer()
     {
         Vector3 velocity = playerRb.linearVelocity;
@@ -53,9 +62,11 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
+        Vector3 pos = gameObject.transform.position;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameObject ammoObj = Instantiate(ammoPrefab, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1, gameObject.transform.position.z), ammoPrefab.transform.rotation);
+            GameObject ammoObj = Instantiate(ammoPrefab, new Vector3(pos.x, pos.y + 1, pos.z), ammoPrefab.transform.rotation);
 
             Rigidbody ammoRb = ammoObj.GetComponent<Rigidbody>();
             if (ammoRb != null)
@@ -67,15 +78,17 @@ public class PlayerController : MonoBehaviour
 
     void CheckAndAdjustXBounds()
     {
-        if (gameObject.transform.position.x < -horizontalBoundary)
+        Vector3 pos = gameObject.transform.position;
+
+        if (pos.x < -horizontalBoundary)
         {
-            gameObject.transform.position = new Vector3(-horizontalBoundary, gameObject.transform.position.y, gameObject.transform.position.z);
+            pos = new Vector3(-horizontalBoundary, pos.y, pos.z);
             playerRb.linearVelocity = new Vector3(0, 0, 0);
         }
 
-        if (gameObject.transform.position.x > horizontalBoundary)
+        if (pos.x > horizontalBoundary)
         {
-            gameObject.transform.position = new Vector3(horizontalBoundary, gameObject.transform.position.y, gameObject.transform.position.z);
+            pos = new Vector3(horizontalBoundary, pos.y, pos.z);
             playerRb.linearVelocity = new Vector3(0, 0, 0);
         }
     }

@@ -4,23 +4,39 @@ using UnityEngine;
 public class MainManager : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI livesText;
 
-    //private int level;
     private float timer = 60.0f;
     private bool isCounting = true;
 
-    protected static int level = 1;
+    protected static int score = 0;
+    protected static int level = 9;
+    protected static int lives = 3;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private static int b_EnemiesToSpawn = level * 5;
+    protected static int EnemiesToSpawn
+    {
+        get
+        {
+            return b_EnemiesToSpawn;
+        }
+        set
+        {
+            b_EnemiesToSpawn = value;
+        }
+    }
+
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         Timer();
+        UpdateScoreText();
+        UpdateLivesText();
     }
 
     private void Timer()
@@ -36,5 +52,15 @@ public class MainManager : MonoBehaviour
                 isCounting = false;
             }
         }
+    }
+
+    private void UpdateScoreText()
+    {
+        scoreText.text = "Score: " + score;
+    }
+
+    private void UpdateLivesText()
+    {
+        livesText.text = "Lives: " + lives;
     }
 }
