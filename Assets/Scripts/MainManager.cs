@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class MainManager : MonoBehaviour
 {
-    public GameObject[] enemies;
     public TextMeshProUGUI timerText;
 
     //private int level;
     private float timer = 60.0f;
     private bool isCounting = true;
+
+    protected static int level = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,7 +23,7 @@ public class MainManager : MonoBehaviour
         Timer();
     }
 
-    void Timer()
+    private void Timer()
     {
         if (isCounting)
         {

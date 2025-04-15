@@ -11,9 +11,22 @@ public class Ammo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DestroyObjectOutOfBounds();
+    }
+
+    private void DestroyObjectOutOfBounds()
+    {
         if (gameObject.transform.position.y > 10)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            Destroy(other.gameObject);
         }
     }
 }
