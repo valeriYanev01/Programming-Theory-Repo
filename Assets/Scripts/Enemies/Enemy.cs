@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour
     {
         if (gameObject.transform.position.y < -8.0f)
         {
+            MainManager.Instance.lives--;
             Destroy(gameObject);
         }
     }

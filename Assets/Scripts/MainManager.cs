@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class MainManager : MonoBehaviour
 
     private float timer = 60.0f;
     private bool isCounting = true;
+
+    public bool isGameOverTriggerred = false;
 
     public int score = 0;
     public int lives = 3;
@@ -43,6 +46,10 @@ public class MainManager : MonoBehaviour
 
         UpdateScoreText();
         UpdateLivesText();
+        if (!isGameOverTriggerred)
+        {
+            GameOverScene();
+        }
     }
 
     private void Timer()
@@ -101,5 +108,14 @@ public class MainManager : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private void GameOverScene()
+    {
+        if (lives == 0)
+        {
+            isGameOverTriggerred = true;
+            SceneManager.LoadScene(3);
+        }
     }
 }
