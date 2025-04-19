@@ -1,22 +1,32 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class SpawnEnemy : MainManager
+public class SpawnEnemy : MonoBehaviour
 {
     public GameObject[] enemies;
+    public GameObject enemyBoss;
+
+    private int level;
+    public int enemiesToSpawn;
 
     private int repeatInterval;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        level = GameManager.Instance.playerData.level;
+        enemiesToSpawn = level * 5;
+
         CalculateRepeatInterval();
-        InvokeRepeating(nameof(Spawn), 1, repeatInterval);
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+        if (level % 5 == 0)
+        {
+            enemiesToSpawn = 1;
+            InvokeRepeating(nameof(SpawnBoss), 1, repeatInterval);
+        }
+        else
+        {
+            InvokeRepeating(nameof(Spawn), 1, repeatInterval);
+        }
     }
 
     private void Spawn()
@@ -24,21 +34,49 @@ public class SpawnEnemy : MainManager
         int randomEnemy = Random.Range(0, enemies.Length);
         Vector3 spawnPos = new Vector3(Random.Range(-11, 11), 8, -1);
 
-        if (EnemiesToSpawn > 0)
+        if (enemiesToSpawn > 0)
         {
             Instantiate(enemies[randomEnemy], spawnPos, enemies[randomEnemy].transform.rotation);
 
-            EnemiesToSpawn--;
+            enemiesToSpawn--;
         }
         else
         {
-            CancelInvoke(nameof(Spawn));
+            int currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+            if (currentEnemies == 0)
+            {
+                CancelInvoke(nameof(Spawn));
+                ProceedToTheNextLevel();
+            }
+        }
+    }
+
+    private void SpawnBoss()
+    {
+        Debug.Log(enemiesToSpawn);
+
+        Vector3 spawnPos = new Vector3(Random.Range(-11, 11), 8, -1);
+
+        if (enemiesToSpawn > 0)
+        {
+            Instantiate(enemyBoss, spawnPos, enemyBoss.transform.rotation);
+
+            enemiesToSpawn--;
+        }
+        else
+        {
+            int currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+            if (currentEnemies == 0)
+            {
+                CancelInvoke(nameof(SpawnBoss));
+                ProceedToTheNextLevel();
+            }
         }
     }
 
     private void CalculateRepeatInterval()
     {
-        if (level > 0 && level < 5)
+        if (level > 0 && level <= 5)
         {
             repeatInterval = 3;
         }
@@ -46,5 +84,15 @@ public class SpawnEnemy : MainManager
         {
             repeatInterval = 2;
         }
+    }
+
+    // Load the next level scene
+    private void ProceedToTheNextLevel()
+    {
+        GameManager.Instance.playerData.level++;
+
+        MainManager.Instance.lives = 3;
+
+        SceneManager.LoadScene(2);
     }
 }

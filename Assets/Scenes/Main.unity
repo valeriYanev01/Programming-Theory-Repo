@@ -483,9 +483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 518f8aaadf014b0498141c4e1d0a7f30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerText: {fileID: 0}
-  scoreText: {fileID: 0}
-  livesText: {fileID: 0}
   ammoPrefab: {fileID: 6927503878184095290, guid: 7f131d214b5aa2340ab3a65a3cace6df, type: 3}
 --- !u!1 &909735389
 GameObject:
@@ -516,13 +513,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89757b0eefcd8a4691ba71477d30fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerText: {fileID: 0}
-  scoreText: {fileID: 0}
-  livesText: {fileID: 0}
   enemies:
   - {fileID: 3271951634083468811, guid: cb158ec6b55dd8a44946e2b74f44307c, type: 3}
   - {fileID: 3177612729967967848, guid: d6cb1836a0fbc47458f983149c18d860, type: 3}
   - {fileID: 4294030950703949822, guid: 46554c0dcd63d114e9fd29ddf082f8da, type: 3}
+  enemyBoss: {fileID: 4294030950703949822, guid: ad45d5b63b2aff949a308182b6dd6194, type: 3}
+  enemiesToSpawn: 0
 --- !u!4 &909735391
 Transform:
   m_ObjectHideFlags: 0
@@ -659,6 +655,53 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &1061653887
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1061653889}
+  - component: {fileID: 1061653888}
+  m_Layer: 0
+  m_Name: UI Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1061653888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061653887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ccaf25f751f7e4f86e29b91793d4d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 330002554}
+  scoreText: {fileID: 2005295896}
+  livesText: {fileID: 2026540939}
+--- !u!4 &1061653889
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061653887}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 434.09998, y: 271.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1175417859
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,6 +858,9 @@ MonoBehaviour:
   timerText: {fileID: 330002554}
   scoreText: {fileID: 2005295896}
   livesText: {fileID: 2026540939}
+  score: 0
+  lives: 3
+  isBossLevel: 0
 --- !u!1 &1499708824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1181,7 +1227,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 393, y: -151}
+  m_AnchoredPosition: {x: 490.6, y: -210.5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2026540939
@@ -1295,3 +1341,4 @@ SceneRoots:
   - {fileID: 1915309630}
   - {fileID: 196362291}
   - {fileID: 909735391}
+  - {fileID: 1061653889}

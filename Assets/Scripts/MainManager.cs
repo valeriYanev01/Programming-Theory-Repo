@@ -3,38 +3,44 @@ using UnityEngine;
 
 public class MainManager : MonoBehaviour
 {
-    public TextMeshProUGUI timerText;
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI livesText;
+    public static MainManager Instance;
+
+    [HideInInspector] public TextMeshProUGUI timerText;
+    [HideInInspector] public TextMeshProUGUI scoreText;
+    [HideInInspector] public TextMeshProUGUI livesText;
 
     private float timer = 60.0f;
     private bool isCounting = true;
 
-    protected static int score = 0;
-    protected static int level = 9;
-    protected static int lives = 3;
+    public int score = 0;
+    public int lives = 3;
+    public bool isBossLevel;
 
-    private static int b_EnemiesToSpawn = level * 5;
-    protected static int EnemiesToSpawn
+    private void Awake()
     {
-        get
+        if (Instance == null)
         {
-            return b_EnemiesToSpawn;
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        set
+        else
         {
-            b_EnemiesToSpawn = value;
+            Destroy(gameObject);
         }
     }
 
-    void Start()
+    private void Start()
     {
-
+        isBossLevel = IsBossLevel();
     }
 
     void Update()
     {
-        Timer();
+        if (isBossLevel)
+        {
+            Timer();
+        }
+
         UpdateScoreText();
         UpdateLivesText();
     }
@@ -56,11 +62,44 @@ public class MainManager : MonoBehaviour
 
     private void UpdateScoreText()
     {
-        scoreText.text = "Score: " + score;
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + score;
+        }
     }
 
     private void UpdateLivesText()
     {
-        livesText.text = "Lives: " + lives;
+        if (livesText != null)
+        {
+            livesText.text = "Lives: " + lives;
+        }
+    }
+
+    public void LoadUIData()
+    {
+        if (timerText != null) timerText.text = "Timer: " + Mathf.CeilToInt(timer);
+        if (scoreText != null) scoreText.text = "Score: " + score;
+        if (livesText != null) livesText.text = "Lives: " + lives;
+    }
+
+    public bool IsBossLevel()
+    {
+        int currentLevel = GameManager.Instance.playerData.level;
+
+        if (currentLevel > 0)
+        {
+            if (currentLevel % 5 == 0)
+            {
+                timerText.gameObject.SetActive(true);
+                return true;
+            }
+            else
+            {
+                timerText.gameObject.SetActive(false);
+                return false;
+            }
+        }
+        return false;
     }
 }

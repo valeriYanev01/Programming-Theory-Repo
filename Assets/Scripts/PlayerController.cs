@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : MainManager
+public class PlayerController : MonoBehaviour
 {
     private Rigidbody playerRb;
     public GameObject ammoPrefab;
@@ -32,7 +32,7 @@ public class PlayerController : MainManager
     {
         if (other.CompareTag("Enemy"))
         {
-            lives--;
+            MainManager.Instance.lives--;
             Destroy(other.gameObject);
         }
     }
@@ -76,7 +76,7 @@ public class PlayerController : MainManager
         }
     }
 
-    void CheckAndAdjustXBounds()
+    private void CheckAndAdjustXBounds()
     {
         Vector3 pos = gameObject.transform.position;
 
